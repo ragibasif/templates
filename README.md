@@ -1,2 +1,3 @@
-# templates
+# Templates
+
 Collection of templates
