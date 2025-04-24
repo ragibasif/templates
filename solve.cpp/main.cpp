@@ -23,24 +23,9 @@
 
 using namespace std;
 
-void solve(void) {
+int main(void) {
     int n;
     cin >> n;
-    printf("%d\n", n);
-}
-
-int main(void) {
-
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-
-    int t;
-    t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
-
+    cout << n;
     return 0;
 }

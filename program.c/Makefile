@@ -1,29 +1,16 @@
 # Makefile                                                                     #
 
-# ANSI colors for stdout
 GREEN=\033[0;92m
 RED=\033[0;91m
 MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := gcc
-DEBUG_CFLAGS := -Wall -Wextra -O0 -g -pedantic -DDEBUG
-RELEASE_CFLAGS := -O3 -DNDEBUG
-COMMON_CFLAGS := -std=c99 -Iinclude
-CFLAGS := $(DEBUG_CFLAGS)
+CFLAGS := -std=c99 -Iinclude -Wall -Wextra -O0 -g -pedantic -DDEBUG -v
 
-# Determine build type
-ifeq ($(RELEASE),1)
-	CFLAGS := $(COMMON_CFLAGS) $(RELEASE_CFLAGS)
-else
-	CFLAGS := $(COMMON_CFLAGS) $(DEBUG_CFLAGS)
-endif
-
-#linker flags: -v, -lm, -lefence
 LDFLAGS := -v -lc
 LIBS =
 
-# Directories
 INSTALL_DIRECTORY := bin
 SOURCE_DIRECTORY := src
 INCLUDE_DIRECTORY := include
@@ -39,12 +26,9 @@ OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
 TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/t_%, $(TEST_SRCS))
 
-
-
 .PHONY: all clean help run install test
 
 all: $(EXECUTABLE)
-
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking ${MAGENTA}$@${RESET} ..."
@@ -59,7 +43,6 @@ $(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@ && \
 		echo "$(GREEN)✅ Compiled: $<$(RESET)" || \
 		(echo "$(RED)❌ Compile failed: $<$(RESET)" && exit 1)
-
 
 test: $(TEST_BINS)
 
@@ -80,24 +63,17 @@ run: $(EXECUTABLE)
 	@make all
 	@./$(EXECUTABLE)
 
-
-
-# It is common to supply a "make install" command when providing software
-# packages for distribution.
 install: $(EXECUTABLE)
 	@ if [ ! -d $(INSTALL_DIRECTORY) ] ; then mkdir -p $(INSTALL_DIRECTORY) ; fi
 	@cp $(EXECUTABLE) $(INSTALL_DIRECTORY)
 	@touch .install && echo $(shell date) >> .install
 
-
 help:
 	@echo "${MAGENTA}make help${RESET}"
 	@echo "Makefile for Building ${MAGENTA}${EXECUTABLE}${RESET}."
 	@echo "Usage:"
-	@echo "  ${MAGENTA}make${RESET}             — debug build"
-	@echo "  ${MAGENTA}make DEBUG=1${RESET}     — force debug build"
-	@echo "  ${MAGENTA}make RELEASE=1${RESET}   — release build"
-	@echo "  ${MAGENTA}make clean${RESET}       — remove built files"
+	@echo "  ${MAGENTA}make${RESET}             — build"
+	@echo "  ${MAGENTA}make clean${RESET}       — remove build files"
 	@echo "  ${MAGENTA}make run${RESET}         — run program"
 	@echo "  ${MAGENTA}make install${RESET}     — install binary to $(INSTALL_DIRECTORY)"
 

@@ -1,24 +1,12 @@
 # Makefile
 
-# ANSI colors for stdout
 GREEN=\033[0;92m
 RED=\033[0;91m
 MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := gcc
-DEBUG_CFLAGS += -Wall -Wextra -O0 -g -pedantic -DDEBUG
-RELEASE_CFLAGS := -O3 -DNDEBUG
-COMMON_CFLAGS := -std=c99
-CFLAGS := $(DEBUG_CFLAGS)
-
-# Determine build type
-ifeq ($(RELEASE),1)
-	CFLAGS := $(COMMON_CFLAGS) $(RELEASE_CFLAGS)
-else
-	CFLAGS := $(COMMON_CFLAGS) $(DEBUG_CFLAGS)
-endif
-
+CFLAGS := -std=c99 -Wall -Wextra -O0 -g -pedantic -DDEBUG -v
 LDFLAGS := -v -lc
 
 EXECUTABLE := DEFAULT
