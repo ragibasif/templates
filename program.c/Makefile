@@ -6,7 +6,7 @@ MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := gcc
-CFLAGS := -std=c99 -Iinclude -Wall -Wextra -O0 -g -pedantic -DDEBUG -v
+CFLAGS := -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
 
 LDFLAGS := -v -lc
 LIBS =

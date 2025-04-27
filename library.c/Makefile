@@ -6,7 +6,7 @@ MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -O0 -g -pedantic -DDEBUG -v
+CFLAGS := -std=c99 -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
 LDFLAGS := -v -lc
 
 EXECUTABLE := DEFAULT
@@ -48,6 +48,6 @@ help:
 	@echo "  ${MAGENTA}make${RESET}             — debug build"
 	@echo "  ${MAGENTA}make DEBUG=1${RESET}     — force debug build"
 	@echo "  ${MAGENTA}make RELEASE=1${RESET}   — release build"
-	@echo "  ${MAGENTA}make clean${RESET}       — remove built files"
+	@echo "  ${MAGENTA}make clean${RESET}       — remove build files"
 	@echo "  ${MAGENTA}make run${RESET}         — run program"
 
