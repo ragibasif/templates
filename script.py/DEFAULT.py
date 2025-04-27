@@ -3,8 +3,7 @@
 
 
 def main():
-    """Main function to run the script."""
-    print("=== main ===")
+    print("Hello, World!")
 
 
 if __name__ == "__main__":
