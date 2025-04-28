@@ -60,16 +60,16 @@ Make sure you have `gcc` and `make` installed.
 make
 ```
 
-### 🧹 Clean build files
-
-```bash
-make clean
-```
-
 ### 🏃 Run the executable
 
 ```bash
 ./build/DEFAULT
+```
+
+### 🧹 Clean build files
+
+```bash
+make clean
 ```
 
 > The executable will be built inside the `build/` directory.

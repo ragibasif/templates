@@ -28,14 +28,14 @@ Make sure you have `gcc` and `make` installed.
 make
 ```
 
-### Clean build files
-
-```bash
-make clean
-```
-
 ### Run the executable
 
 ```bash
 ./DEFAULT
+```
+
+### Clean build files
+
+```bash
+make clean
 ```
