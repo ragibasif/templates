@@ -5,8 +5,9 @@ RED=\033[0;91m
 MAGENTA=\033[0;95m
 RESET=\033[0m
 
-CC := gcc
+CC := clang
 CFLAGS := -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
+DBG = lldb
 
 LDFLAGS := -v -lc
 LIBS =
@@ -24,11 +25,15 @@ HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
 OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
-TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/t_%, $(TEST_SRCS))
+TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS))
 
-.PHONY: all clean help run install test
+.PHONY: all clean help run install test check debug
 
 all: $(EXECUTABLE)
+
+check:
+	@which $(CC) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(CC) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(CC) not found, please install clang$(RESET)"
+	@which $(DBG) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(DBG) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(DBG) not found, please install lldb$(RESET)"
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking ${MAGENTA}$@${RESET} ..."
@@ -46,12 +51,16 @@ $(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
 
 test: $(TEST_BINS)
 
-$(BUILD_DIRECTORY)/test_%: $(TEST_DIRECTORY)/%.c $(wildcard $(INCLUDE_DIRECTORY)/*.h)
+$(BUILD_DIRECTORY)/%: $(TEST_DIRECTORY)/%.c $(wildcard $(INCLUDE_DIRECTORY)/*.h)
 	@echo "🧪 Compiling test ${MAGENTA}$<${RESET} ..."
 	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) && \
 		echo "$(GREEN)✅ Test build successful: $@$(RESET)" || \
 		(echo "$(RED)❌ Test build failed: $<$(RESET)" && exit 1)
+
+
+debug: $(EXECUTABLE)
+	@$(DBG) ./${EXECUTABLE}
 
 clean:
 	@echo "${MAGENTA}make clean${RESET} $(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install"

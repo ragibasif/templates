@@ -1,6 +1,6 @@
 # Makefile
 
-CXX := g++
+CXX := clang++
 CXXFLAGS := -std=c++17 -Wall -Wextra -g3
 SRC := $(wildcard *.cpp)
 EXECUTABLE := solve

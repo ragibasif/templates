@@ -90,6 +90,14 @@ gcc -Iinclude tests/test_example.c src/DEFAULT.c -o test_example
 ./test_example
 ```
 
+## 👩‍🔧 Debugging
+
+To enter debugging mode:
+
+```bash
+make debug
+```
+
 ## 📄 Dependencies
 
 This project uses:
