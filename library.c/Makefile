@@ -1,39 +1,5 @@
 # Makefile
 
-# https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-.PHONY: build-main
-build-main: build-dir
-	$(CC) -Wall -O0 -g -o build/main src/main.c
-
-.PHONY: check
-check:
-	@which $(CC) > /dev/null && echo "SUCCESS: $(CC) is installed" || echo "ERROR: $(CC) not found, please install clang"
-	@which $(DBG) > /dev/null && echo "SUCCESS: $(DBG) is installed" || echo "ERROR: $(DBG) not found, please install lldb"
-
-.PHONY: build-dir
-build-dir:
-	if [ ! -d build ]; then mkdir build; fi
-
-.PHONY: build-test
-build-test: build-dir
-	$(CC) -Wall -O0 -g -o build/test src/test.c
-
-.PHONY: run
-run: build-main
-	./build/main
-
-.PHONY: test
-test: build-test
-	./build/test
-
-.PHONY: debug
-debug: build-main
-	$(DBG) ./build/main
-
-.PHONY: debug-test
-debug-test: build-test
-	$(DBG) ./build/test
-
 GREEN=\033[0;92m
 RED=\033[0;91m
 MAGENTA=\033[0;95m
@@ -50,9 +16,14 @@ SRCS := $(wildcard *.c)
 HDRS := $(wildcard *.h)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean help run
+.PHONY: all clean help run check
 
 all: $(EXECUTABLE)
+
+
+check:
+	@which $(CC) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(CC) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(CC) not found, please install clang$(RESET)"
+	@which $(DBG) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(DBG) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(DBG) not found, please install lldb$(RESET)"
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking ${MAGENTA}$@${RESET} ..."
@@ -76,13 +47,19 @@ run: $(EXECUTABLE)
 	@make all
 	@./$(EXECUTABLE)
 
+TEST_DIRECTORY := tests
+TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
+TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(TEST_DIRECTORY)/%, $(TEST_SRCS))
+
+test: $(TEST_BINS)
+
+
 help:
 	@echo "${MAGENTA}make help${RESET}"
 	@echo "Makefile for Building ${MAGENTA}${EXECUTABLE}${RESET}."
 	@echo "Usage:"
 	@echo "  ${MAGENTA}make${RESET}             — debug build"
-	@echo "  ${MAGENTA}make DEBUG=1${RESET}     — force debug build"
-	@echo "  ${MAGENTA}make RELEASE=1${RESET}   — release build"
 	@echo "  ${MAGENTA}make clean${RESET}       — remove build files"
-	@echo "  ${MAGENTA}make run${RESET}         — run program"
+	@echo "  ${MAGENTA}make test${RESET}        — build test files"
+	@echo "  ${MAGENTA}make run${RESET}         — build and run program"
 

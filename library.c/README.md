@@ -1,8 +1,6 @@
 # DEFAULT
 
-{{DESCRIPTION}}
-
-It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
+Library written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
 
 ## Usage
 

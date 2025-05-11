@@ -1,3 +1,3 @@
 # Templates
 
-Collection of templates.
+My collection of templates.

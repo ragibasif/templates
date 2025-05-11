@@ -1,36 +1,34 @@
 <div align="center">
 
-# 🦄 DEFAULT
+# DEFAULT
 
 </div>
 
 <details open="open">
 <summary>Table of Contents</summary>
 
-- [🦄 DEFAULT](#-DEFAULT)
-  - [🧠 About](#-about)
-  - [📁 Directory Structure](#-directory-structure)
-  - [🛠️ Usage](#️-usage)
-    - [💻 Installation](#-installation)
-    - [🔧 Build the project](#-build-the-project)
-    - [🧹 Clean build files](#-clean-build-files)
-    - [🏃 Run the executable](#-run-the-executable)
-  - [🧪 Running Tests](#-running-tests)
-  - [📄 Dependencies](#-dependencies)
-  - [📚 Documentation](#-documentation)
-  - [🙌 Contributing](#-contributing)
-  - [🪪 License](#-license)
-  - [📋 Acknowledgements](#-acknowledgements)
+- [DEFAULT](#-DEFAULT)
+  - [About](#-about)
+  - [Directory Structure](#-directory-structure)
+  - [Usage](#️-usage)
+    - [Installation](#-installation)
+    - [Build the project](#-build-the-project)
+    - [Clean build files](#-clean-build-files)
+    - [Run the executable](#-run-the-executable)
+  - [Running Tests](#-running-tests)
+  - [Dependencies](#-dependencies)
+  - [Documentation](#-documentation)
+  - [Contributing](#-contributing)
+  - [License](#-license)
+  - [Acknowledgements](#-acknowledgements)
 
 </details>
 
-## 🧠 About
+## About
 
-{{DESCRIPTION}}
+Program written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
 
-It's written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
-
-## 📁 Directory Structure
+## Directory Structure
 
 ```bash
 DEFAULT/
@@ -42,9 +40,9 @@ DEFAULT/
 └── README.md       # This file
 ```
 
-## 🛠️ Usage
+## Usage
 
-### 💻 Installation
+### Installation
 
 Clone the repository.
 
@@ -54,19 +52,19 @@ git clone git@github.com:ragibasif/DEFAULT.git
 
 Make sure you have `gcc` and `make` installed.
 
-### 🔧 Build the project
+### Build the project
 
 ```bash
 make
 ```
 
-### 🏃 Run the executable
+### Run the executable
 
 ```bash
 ./build/DEFAULT
 ```
 
-### 🧹 Clean build files
+### Clean build files
 
 ```bash
 make clean
@@ -74,7 +72,7 @@ make clean
 
 > The executable will be built inside the `build/` directory.
 
-## 🧪 Running Tests
+## Running Tests
 
 To build and run test files:
 
@@ -90,7 +88,7 @@ gcc -Iinclude tests/test_example.c src/DEFAULT.c -o test_example
 ./test_example
 ```
 
-## 👩‍🔧 Debugging
+## Debugging
 
 To enter debugging mode:
 
@@ -98,7 +96,7 @@ To enter debugging mode:
 make debug
 ```
 
-## 📄 Dependencies
+## Dependencies
 
 This project uses:
 
@@ -106,13 +104,13 @@ This project uses:
 - GNU Make
 - (Optional) Any libraries you're using (e.g., `glib`, `SDL2`, etc.)
 
-## 📚 Documentation
+## Documentation
 
 - All headers are documented in the `include/` folder.
 - Inline comments are included in the source files.
 - [Optional] Use `doxygen` if you plan to generate documentation.
 
-## 🙌 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a new branch (`git checkout -b feature/feature-name`)
@@ -120,8 +118,8 @@ This project uses:
 4. Push to your fork (`git push origin feature/feature-name`)
 5. Open a pull request
 
-## 🪪 License
+## License
 
 This project is licensed under the **MIT license**. See the [LICENSE](LICENSE) file for details.
 
-## 📑 Acknowledgements
+## Acknowledgements

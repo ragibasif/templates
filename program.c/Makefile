@@ -1,4 +1,4 @@
-# Makefile                                                                     #
+# Makefile
 
 GREEN=\033[0;92m
 RED=\033[0;91m
@@ -6,8 +6,8 @@ MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := clang
-CFLAGS := -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
-DBG = lldb
+CFLAGS += -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
+DBG := lldb
 
 LDFLAGS := -v -lc
 LIBS =
@@ -83,6 +83,7 @@ help:
 	@echo "Usage:"
 	@echo "  ${MAGENTA}make${RESET}             — build"
 	@echo "  ${MAGENTA}make clean${RESET}       — remove build files"
-	@echo "  ${MAGENTA}make run${RESET}         — run program"
+	@echo "  ${MAGENTA}make run${RESET}         — build and run program"
+	@echo "  ${MAGENTA}make test${RESET}        — build tests"
 	@echo "  ${MAGENTA}make install${RESET}     — install binary to $(INSTALL_DIRECTORY)"
 
