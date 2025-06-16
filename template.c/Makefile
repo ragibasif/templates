@@ -20,9 +20,7 @@ CFLAGS := -std=c99 -Wall -Wextra -Weverything -Wvla -O1 -g3 -pedantic -v -fsanit
 DBG := lldb
 
 LDFLAGS := -v -lc
-LIBS =
 
-LIBS_DIRECTORY := libs
 INSTALL_DIRECTORY := bin
 SOURCE_DIRECTORY := src
 INCLUDE_DIRECTORY := include
@@ -32,13 +30,10 @@ TEST_DIRECTORY := tests
 EXECUTABLE := $(BUILD_DIRECTORY)/program
 
 SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c)
-SRCS += $(wildcard $(LIBS_DIRECTORY)/*.c)
 
 HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
-HDRS += $(wildcard $(LIBS_DIRECTORY)/*.h)
 
 OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
-OBJS += $(patsubst $(LIBS_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
 TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS))
@@ -58,7 +53,7 @@ $(EXECUTABLE): $(OBJS)
 		echo "$(SUCCESS)✅ Build successful:$(RESET) $@" || \
 		(echo "$(ERROR)❌ Linking failed:$(RESET) $@" && exit 1)
 
-$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c $(LIBS_DIRECTORY)/%.c
+$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
 	@echo "🔧 Compiling $(INFO)$<$(RESET) ..."
 	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) -c $< -o $@ && \

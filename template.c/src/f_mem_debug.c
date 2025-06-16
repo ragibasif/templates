@@ -5,7 +5,7 @@
 #define F_MEMORY_INTERNAL
 #define F_NO_MEMORY_DEBUG
 #define F_MEMORY_PRINT
-#include "forge.h"
+#include "../include/forge.h"
 
 // Reset all attributes
 #define RESET "\x1b[0m"

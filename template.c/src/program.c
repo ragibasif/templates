@@ -8,7 +8,7 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Provides a template to build C programs.
+ * Program implementation.
  *
  */
 

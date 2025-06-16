@@ -1,5 +1,5 @@
 // test_example.c
 
-#include "template.h"
+#include "../include/program.h"
 
 int main(void) { return 0; }

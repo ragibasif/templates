@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-File: template.py
-Author: Ragib Asif
-Email: ragib.asif30@myhunter.cuny.edu
-GitHub: https://github.com/ragibasif
-LinkedIn: https://www.linkedin.com/in/ragibasif/
-SPDX-License-Identifier: MIT
-Copyright (c) 2025 Ragib Asif
-Version 1.0.0
-
-Provides a template to build Python scripts.
-
-- <All modification dates go here>
-"""
+# File: main.py
+# Author: Ragib Asif
+# Email: ragib.asif30@myhunter.cuny.edu
+# GitHub: https://github.com/ragibasif
+# LinkedIn: https://www.linkedin.com/in/ragibasif/
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Ragib Asif
+# Version 1.0.0
+#
+# Provides a template to build Python scripts.
+#
 
 # Standard Library Imports
 import argparse
 import logging
 import os
 import sys
-from typing import List, Dict, Any, Optional
 
 # Third-Party Imports
 # import numpy as np
@@ -34,10 +30,7 @@ DEFAULT_VALUE = "default"
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("script.log"),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler("script.log"), logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
@@ -73,22 +66,19 @@ def parse_arguments() -> argparse.Namespace:
     Returns:
         argparse.Namespace: Parsed command line arguments
     """
-    parser = argparse.ArgumentParser(
-        description="Description of what the script does."
-    )
+    parser = argparse.ArgumentParser(description="Description of what the script does.")
 
     parser.add_argument(
-        "-i", "--input",
+        "-i",
+        "--input",
         dest="input_value",
         type=str,
         default=DEFAULT_VALUE,
-        help="Input value for the script"
+        help="Input value for the script",
     )
 
     parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Enable verbose logging"
+        "-v", "--verbose", action="store_true", help="Enable verbose logging"
     )
 
     return parser.parse_args()
