@@ -19,7 +19,6 @@ DBG = gdb
 
 LDFLAGS := -v -lc
 
-LIBS_DIRECTORY := libs
 INSTALL_DIRECTORY := bin
 SOURCE_DIRECTORY := src
 INCLUDE_DIRECTORY := include
@@ -28,14 +27,11 @@ TEST_DIRECTORY := tests
 
 EXECUTABLE := $(BUILD_DIRECTORY)/program
 
-SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c)
-SRCS += $(wildcard $(LIBS_DIRECTORY)/*.c)
+SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c) $(wildcard $(SOURCE_DIRECTORY)/*/*.c)
 
-HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
-HDRS += $(wildcard $(LIBS_DIRECTORY)/*.h)
+HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h) $(wildcard $(INCLUDE_DIRECTORY)/*/*.h)
 
 OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
-OBJS += $(patsubst $(LIBS_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
 TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS))
@@ -45,20 +41,20 @@ TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS
 all: $(EXECUTABLE)
 
 check:
-	@which $(CC) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(CC) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(CC) not found, please install clang"
-	@which $(DBG) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(DBG) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(DBG) not found, please install lldb"
+	@which $(CC) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(CC) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(CC) not found, please install $(CC)"
+	@which $(DBG) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(DBG) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(DBG) not found, please install $(DBG)"
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking $(INFO)$@$(RESET) ..."
-	@mkdir -p $(BUILD_DIRECTORY)
+	@mkdir -p $(@D) # create specific target directory needed for each file
 	@$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) && \
 		echo "$(SUCCESS)✅ Build successful:$(RESET) $@" || \
 		(echo "$(ERROR)❌ Linking failed:$(RESET) $@" && exit 1)
 
 $(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
 	@echo "🔧 Compiling $(INFO)$<$(RESET) ..."
-	@mkdir -p $(BUILD_DIRECTORY)
-	@$(CC) $(CFLAGS) -c $< $(LIBS_DIRECTORY) -o $@ && \
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -I$(INCLUDE_DIRECTORY) -c $< -o $@ && \
 		echo "$(SUCCESS)✅ Compiled:$(RESET) $<" || \
 		(echo "$(ERROR)❌ Compile failed:$(RESET) $<" && exit 1)
 
@@ -67,7 +63,7 @@ test: $(TEST_BINS)
 
 $(BUILD_DIRECTORY)/%: $(TEST_DIRECTORY)/%.c $(wildcard $(INCLUDE_DIRECTORY)/*.h)
 	@echo "🧪 Compiling test $(INFO)$<$(RESET) ..."
-	@mkdir -p $(BUILD_DIRECTORY)
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) && \
 		echo "$(SUCCESS)✅ Test build successful:$(RESET) $@" || \
 		(echo "$(ERROR)❌ Test build failed:$(RESET) $<" && exit 1)

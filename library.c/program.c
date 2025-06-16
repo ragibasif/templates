@@ -1,5 +1,5 @@
 /*
- * File: main.c
+ * File: program.c
  * Author: Ragib Asif
  * Email: ragib.asif30@myhunter.cuny.edu
  * GitHub: https://github.com/ragibasif
@@ -8,16 +8,8 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Entry point to the program.
+ * Program implementation.
  *
  */
 
-#include "../libs/internal_debug.h"
-
-int main(int argc, char **argv) {
-    (void)argc;
-    (void)argv;
-
-    forge_run();
-    return 0;
-}
+#include "program.h"
