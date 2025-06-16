@@ -26,11 +26,12 @@
 
 ## About
 
-Program written in standard C (C99) and uses GNU Make for building. The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
+Program written in C programming language and uses GNU Make for building.
+The goal of this project is to [insert goal or motivation, e.g., build a simple CLI tool, implement data structures from scratch, etc.].
 
 ## Directory Structure
 
-```bash
+```shell
 DEFAULT/
 ├── src/            # Source files
 ├── include/        # Header files
@@ -46,27 +47,27 @@ DEFAULT/
 
 Clone the repository.
 
-```bash
+```shell
 git clone git@github.com:ragibasif/DEFAULT.git
 ```
 
-Make sure you have `gcc` and `make` installed.
+Make sure you have `gcc` and/or `clang` and `make` installed.
 
 ### Build the project
 
-```bash
+```shell
 make
 ```
 
 ### Run the executable
 
-```bash
+```shell
 ./build/DEFAULT
 ```
 
 ### Clean build files
 
-```bash
+```shell
 make clean
 ```
 
@@ -76,14 +77,14 @@ make clean
 
 To build and run test files:
 
-```bash
+```shell
 make test
 ./build/test_example
 ```
 
 Or you can manually compile and run test files like:
 
-```bash
+```shell
 gcc -Iinclude tests/test_example.c src/DEFAULT.c -o test_example
 ./test_example
 ```
@@ -92,7 +93,7 @@ gcc -Iinclude tests/test_example.c src/DEFAULT.c -o test_example
 
 To enter debugging mode:
 
-```bash
+```shell
 make debug
 ```
 
@@ -100,15 +101,13 @@ make debug
 
 This project uses:
 
-- C99 Standard
+- C Programming Language
 - GNU Make
-- (Optional) Any libraries you're using (e.g., `glib`, `SDL2`, etc.)
 
 ## Documentation
 
 - All headers are documented in the `include/` folder.
 - Inline comments are included in the source files.
-- [Optional] Use `doxygen` if you plan to generate documentation.
 
 ## Contributing
 

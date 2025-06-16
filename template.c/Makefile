@@ -11,13 +11,11 @@ ERROR=$(BOLD)$(RED)
 SUCCESS=$(BOLD)$(GREEN)
 INFO=$(BOLD)$(CYAN)
 
-# CC := gcc
-CC := clang
+CC := gcc
 
 CFLAGS := -std=c99 -Wall -Wextra -Weverything -Wvla -O1 -g3 -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 
-# DBG = gdb
-DBG := lldb
+DBG = gdb
 
 LDFLAGS := -v -lc
 
@@ -30,9 +28,7 @@ TEST_DIRECTORY := tests
 EXECUTABLE := $(BUILD_DIRECTORY)/program
 
 SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c)
-
 HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
-
 OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
@@ -97,6 +93,7 @@ help:
 	@echo "Usage:"
 	@echo "  $(MAGENTA)make$(RESET)             — build"
 	@echo "  $(MAGENTA)make all$(RESET)         — build"
+	@echo "  $(MAGENTA)make check$(RESET)       — dependency check"
 	@echo "  $(MAGENTA)make clean$(RESET)       — remove build files"
 	@echo "  $(MAGENTA)make run$(RESET)         — run program"
 	@echo "  $(MAGENTA)make test$(RESET)        — build tests"
