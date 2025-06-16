@@ -13,7 +13,7 @@
  */
 
 #define F_MEMORY_DEBUG /* turns on the memory debugging system */
-#include "../include/internal_debug.h"
+#include "internal_debug.h"
 
 void forge_run(void) {
     f_debug_memory_init(NULL, NULL, NULL);
