@@ -1,5 +1,5 @@
 /*
- * File: template.h
+ * File: program.h
  * Author: Ragib Asif
  * Email: ragib.asif30@myhunter.cuny.edu
  * GitHub: https://github.com/ragibasif
@@ -8,34 +8,32 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Provides a template to build C projects.
+ * Provides a template to build C programs.
  *
- *  - <All modification dates go here>
  */
 
-#ifndef __TEMPLATE_H__
-#define __TEMPLATE_H__
+#ifndef __PROGRAM_H__
+#define __PROGRAM_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
 /* --- Version Information --- */
-#define TEMPLATE_VERSION_MAJOR 1 /**< Major version (API-breaking changes) */
-#define TEMPLATE_VERSION_MINOR                                                 \
+#define PROGRAM_VERSION_MAJOR 1 /**< Major version (API-breaking changes) */
+#define PROGRAM_VERSION_MINOR                                                  \
     0 /**< Minor version (backwards-compatible additions) */
-#define TEMPLATE_VERSION_PATCH 0 /**< Patch version (bug fixes) */
+#define PROGRAM_VERSION_PATCH 0 /**< Patch version (bug fixes) */
 
 /* String representation of version */
-#define TEMPLATE_VERSION_STRING "1.0.0"
+#define PROGRAM_VERSION_STRING "1.0.0"
 
 /* Version comparison macros (useful for dependency checks) */
-#define TEMPLATE_VERSION_CHECK(major, minor, patch)                            \
-    ((major) < TEMPLATE_VERSION_MAJOR ||                                       \
-     ((major) == TEMPLATE_VERSION_MAJOR &&                                     \
-      (minor) < TEMPLATE_VERSION_MINOR) ||                                     \
-     ((major) == TEMPLATE_VERSION_MAJOR &&                                     \
-      (minor) == TEMPLATE_VERSION_MINOR && (patch) <= TEMPLATE_VERSION_PATCH))
+#define PROGRAM_VERSION_CHECK(major, minor, patch)                             \
+    ((major) < PROGRAM_VERSION_MAJOR ||                                        \
+     ((major) == PROGRAM_VERSION_MAJOR && (minor) < PROGRAM_VERSION_MINOR) ||  \
+     ((major) == PROGRAM_VERSION_MAJOR && (minor) == PROGRAM_VERSION_MINOR &&  \
+      (patch) <= PROGRAM_VERSION_PATCH))
 
 #define MY_MACRO(x) ((x) * 2)
 
@@ -52,7 +50,7 @@ int my_function(int param1, int param2);
 }
 #endif // __cplusplus
 
-#endif // __TEMPLATE_H__
+#endif // __PROGRAM_H__
 
 /******************************************************************************/
 /*                                                        SEMANTIC VERSIONING */

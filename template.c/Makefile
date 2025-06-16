@@ -1,17 +1,28 @@
 # Makefile
 
+RESET=\033[0m
+BOLD=\033[1m
 GREEN=\033[0;92m
 RED=\033[0;91m
 MAGENTA=\033[0;95m
-RESET=\033[0m
+CYAN=\033[0;96m
 
+ERROR=$(BOLD)$(RED)
+SUCCESS=$(BOLD)$(GREEN)
+INFO=$(BOLD)$(CYAN)
+
+# CC := gcc
 CC := clang
-CFLAGS += -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
+
+CFLAGS := -std=c99 -Wall -Wextra -Weverything -Wvla -O1 -g3 -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
+
+# DBG = gdb
 DBG := lldb
 
 LDFLAGS := -v -lc
 LIBS =
 
+LIBS_DIRECTORY := libs
 INSTALL_DIRECTORY := bin
 SOURCE_DIRECTORY := src
 INCLUDE_DIRECTORY := include
@@ -21,8 +32,13 @@ TEST_DIRECTORY := tests
 EXECUTABLE := $(BUILD_DIRECTORY)/program
 
 SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c)
+SRCS += $(wildcard $(LIBS_DIRECTORY)/*.c)
+
 HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
+HDRS += $(wildcard $(LIBS_DIRECTORY)/*.h)
+
 OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
+OBJS += $(patsubst $(LIBS_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
 TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS))
@@ -32,45 +48,48 @@ TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS
 all: $(EXECUTABLE)
 
 check:
-	@which $(CC) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(CC) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(CC) not found, please install clang$(RESET)"
-	@which $(DBG) > /dev/null && echo "$(GREEN)✅ SUCCESS: $(DBG) is installed$(RESET)" || echo "$(RED)❌ ERROR: $(DBG) not found, please install lldb$(RESET)"
+	@which $(CC) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(CC) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(CC) not found, please install clang"
+	@which $(DBG) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(DBG) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(DBG) not found, please install lldb"
 
 $(EXECUTABLE): $(OBJS)
-	@echo "🔧 Linking ${MAGENTA}$@${RESET} ..."
+	@echo "🔧 Linking $(INFO)$@$(RESET) ..."
 	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) && \
-		echo "$(GREEN)✅ Build successful: $@$(RESET)" || \
-		(echo "$(RED)❌ Linking failed: $@$(RESET)" && exit 1)
+		echo "$(SUCCESS)✅ Build successful:$(RESET) $@" || \
+		(echo "$(ERROR)❌ Linking failed:$(RESET) $@" && exit 1)
 
-$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
-	@echo "🔧 Compiling ${MAGENTA}$<${RESET} ..."
+$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c $(LIBS_DIRECTORY)/%.c
+	@echo "🔧 Compiling $(INFO)$<$(RESET) ..."
 	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) -c $< -o $@ && \
-		echo "$(GREEN)✅ Compiled: $<$(RESET)" || \
-		(echo "$(RED)❌ Compile failed: $<$(RESET)" && exit 1)
+		echo "$(SUCCESS)✅ Compiled:$(RESET) $<" || \
+		(echo "$(ERROR)❌ Compile failed:$(RESET) $<" && exit 1)
 
 test: $(TEST_BINS)
+	@echo "$(INFO)make test$(RESET)"
 
 $(BUILD_DIRECTORY)/%: $(TEST_DIRECTORY)/%.c $(wildcard $(INCLUDE_DIRECTORY)/*.h)
-	@echo "🧪 Compiling test ${MAGENTA}$<${RESET} ..."
+	@echo "🧪 Compiling test $(INFO)$<$(RESET) ..."
 	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) && \
-		echo "$(GREEN)✅ Test build successful: $@$(RESET)" || \
-		(echo "$(RED)❌ Test build failed: $<$(RESET)" && exit 1)
+		echo "$(SUCCESS)✅ Test build successful:$(RESET) $@" || \
+		(echo "$(ERROR)❌ Test build failed:$(RESET) $<" && exit 1)
 
 
 debug: $(EXECUTABLE)
-	@$(DBG) ./${EXECUTABLE}
+	@$(DBG) ./$(EXECUTABLE)
 
 clean:
-	@echo "${MAGENTA}make clean${RESET} $(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install"
+	@echo "$(INFO)make clean$(RESET) $(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install"
 	@$(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install .*.un~
 
 
 run: $(EXECUTABLE)
+	@echo "$(INFO)make run$(RESET)"
 	@make clean
 	@make all
 	@./$(EXECUTABLE)
+	@make clean
 
 install: $(EXECUTABLE)
 	@ if [ ! -d $(INSTALL_DIRECTORY) ] ; then mkdir -p $(INSTALL_DIRECTORY) ; fi
@@ -78,12 +97,13 @@ install: $(EXECUTABLE)
 	@touch .install && echo $(shell date) >> .install
 
 help:
-	@echo "${MAGENTA}make help${RESET}"
-	@echo "Makefile for Building ${MAGENTA}${EXECUTABLE}${RESET}."
+	@echo "$(INFO)make help$(RESET)"
+	@echo "Makefile for Building $(MAGENTA)$(EXECUTABLE)$(RESET)."
 	@echo "Usage:"
-	@echo "  ${MAGENTA}make${RESET}             — build"
-	@echo "  ${MAGENTA}make clean${RESET}       — remove build files"
-	@echo "  ${MAGENTA}make run${RESET}         — build and run program"
-	@echo "  ${MAGENTA}make test${RESET}        — build tests"
-	@echo "  ${MAGENTA}make install${RESET}     — install binary to $(INSTALL_DIRECTORY)"
+	@echo "  $(MAGENTA)make$(RESET)             — build"
+	@echo "  $(MAGENTA)make all$(RESET)         — build"
+	@echo "  $(MAGENTA)make clean$(RESET)       — remove build files"
+	@echo "  $(MAGENTA)make run$(RESET)         — run program"
+	@echo "  $(MAGENTA)make test$(RESET)        — build tests"
+	@echo "  $(MAGENTA)make install$(RESET)     — install binary to $(INSTALL_DIRECTORY)"
 
