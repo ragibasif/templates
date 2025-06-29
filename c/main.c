@@ -1,5 +1,5 @@
 /*
- * File: program.c
+ * File: main.c
  * Author: Ragib Asif
  * Email: ragib.asif30@myhunter.cuny.edu
  * GitHub: https://github.com/ragibasif
@@ -8,8 +8,17 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Program implementation.
+ * Entry point to the program.
  *
  */
 
-#include "../include/program.h"
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    (void)argc;
+    (void)argv;
+
+    puts("Hello, World!");
+
+    return 0;
+}

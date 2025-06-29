@@ -7,6 +7,8 @@
 # Copyright (c) 2025 Ragib Asif
 # Version 1.0.0
 #
+################################################################################
+#
 # VHS documentation
 #
 # Output:
@@ -68,6 +70,8 @@ Output demo.gif
 Output demo.mp4
 Output demo.webm
 
+Require echo
+
 Set Shell "zsh"
 Set FontSize 32
 Set FontFamily "Fira Code"
@@ -79,4 +83,4 @@ Set TypingSpeed 25ms
 
 Type "echo Welcome!" Sleep 500ms Enter
 
-Sleep 5s
+Sleep 1s

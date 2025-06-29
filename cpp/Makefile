@@ -1,4 +1,11 @@
-# Makefile
+# File: Makefile
+# Author: Ragib Asif
+# Email: ragib.asif30@myhunter.cuny.edu
+# GitHub: https://github.com/ragibasif
+# LinkedIn: https://www.linkedin.com/in/ragibasif/
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Ragib Asif
+# Version 1.0.0
 
 RESET=\033[0m
 BOLD=\033[1m
@@ -11,8 +18,8 @@ ERROR=$(BOLD)$(RED)
 SUCCESS=$(BOLD)$(GREEN)
 INFO=$(BOLD)$(CYAN)
 
-CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -Weverything -Wvla -O1 -g3 -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra -Weverything -Wvla -O1 -g3 -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 DBG = gdb
 LDFLAGS := -v -lc
 
@@ -20,30 +27,30 @@ BUILD_DIRECTORY := build
 
 EXECUTABLE := $(BUILD_DIRECTORY)/program
 
-SRCS := $(wildcard *.c) $(wildcard */*.c)
+SRCS := $(wildcard *.cpp) #$(wildcard */*.cpp)
 HDRS := $(wildcard *.h) $(wildcard */*.h)
-OBJS := $(patsubst %.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
+OBJS := $(patsubst %.cpp, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
 
-.PHONY: all clean help run install test check debug
+.PHONY: all clean help run check debug
 
 all: $(EXECUTABLE)
 
 check:
-	@which $(CC) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(CC) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(CC) not found, please install $(CC)"
+	@which $(CXX) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(CXX) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(CXX) not found, please install $(CXX)"
 	@which $(DBG) > /dev/null && echo "$(SUCCESS)✅ SUCCESS:$(RESET) $(DBG) is installed" || echo "$(ERROR)❌ ERROR:$(RESET) $(DBG) not found, please install $(DBG)"
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking $(INFO)$@$(RESET) ..."
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) && \
+	@$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) && \
 		echo "$(SUCCESS)✅ Build successful:$(RESET) $@" || \
 		(echo "$(ERROR)❌ Linking failed:$(RESET) $@" && exit 1)
 
-$(BUILD_DIRECTORY)/%.o: %.c
+$(BUILD_DIRECTORY)/%.o: %.cpp
 	@echo "🔧 Compiling $(INFO)$<$(RESET) ..."
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -c $< -o $@ && \
+	@$(CXX) $(CXXFLAGS) -c $< -o $@ && \
 		echo "$(SUCCESS)✅ Compiled:$(RESET) $<" || \
 		(echo "$(ERROR)❌ Compile failed:$(RESET) $<" && exit 1)
 
@@ -52,8 +59,8 @@ debug: $(EXECUTABLE)
 	@$(DBG) ./$(EXECUTABLE)
 
 clean:
-	@echo "$(INFO)make clean$(RESET) $(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install"
-	@$(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install .*.un~
+	@echo "$(INFO)make clean$(RESET) $(RM) -r $(EXECUTABLE) $(OBJS) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .*.un~"
+	@$(RM) -r $(EXECUTABLE) $(OBJS) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .*.un~
 
 
 run: $(EXECUTABLE)

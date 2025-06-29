@@ -1,5 +1,5 @@
 /*
- * File: main.c
+ * File: program.h
  * Author: Ragib Asif
  * Email: ragib.asif30@myhunter.cuny.edu
  * GitHub: https://github.com/ragibasif
@@ -8,16 +8,21 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Entry point to the program.
+ * Provides a template to build C programs.
  *
  */
 
-#include "../include/third_party/internal_debug.h"
+#ifndef PROGRAM_H_
+#define PROGRAM_H_
 
-int main(int argc, char **argv) {
-    (void)argc;
-    (void)argv;
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
-    forge_run();
-    return 0;
+// API
+
+#ifdef __cplusplus
 }
+#endif // __cplusplus
+
+#endif // PROGRAM_H_
