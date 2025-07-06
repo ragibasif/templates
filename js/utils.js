@@ -1,5 +1,5 @@
 /*
- * File: main.c
+ * File: utils.js
  * Author: Ragib Asif
  * Email: 182296466+ragibasif@users.noreply.github.com
  * GitHub: https://github.com/ragibasif
@@ -8,17 +8,13 @@
  * Copyright (c) 2025 Ragib Asif
  * Version 1.0.0
  *
- * Entry point to the program.
- *
  */
 
-#include <stdio.h>
-
-int main(int argc, char **argv) {
-    (void)argc;
-    (void)argv;
-
-    puts("Hello, World!");
-
-    return 0;
-}
+export const externalLink = (element, { url, text }) => {
+  Object.assign(element, {
+    href: url,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    textContent: text,
+  });
+};

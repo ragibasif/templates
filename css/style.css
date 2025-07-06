@@ -1,0 +1,159 @@
+/*
+ * File: style.css
+ * Author: Ragib Asif
+ * Email: 182296466+ragibasif@users.noreply.github.com
+ * GitHub: https://github.com/ragibasif
+ * LinkedIn: https://www.linkedin.com/in/ragibasif/
+ * SPDX-License-Identifier: MIT
+ * Copyright (c) 2025 Ragib Asif
+ * Version 1.0.0
+ *
+ */
+
+:root {
+  --white: #e5e5e5ff;
+  --black: #1a1918ff;
+  --red: #d92525ff;
+  --green: #4f772dff;
+  --blue: #023e8aff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  padding: 1rem;
+  height: 100vh;
+  width: 100vw;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--white);
+  border: none;
+}
+
+a:hover {
+  color: var(--white);
+}
+
+/* Text Attributes */
+
+.bold-text {
+  font-weight: bold;
+}
+
+.italic-text {
+  font-style: italic;
+}
+
+.black-text {
+  color: var(--black);
+}
+
+.white-text {
+  color: var(--white);
+}
+
+.red-text {
+  color: var(--red);
+}
+
+.green-text {
+  color: var(--green);
+}
+
+.blue-text {
+  color: var(--blue);
+}
+
+/* Background */
+
+.black-bg {
+  background-color: var(--black);
+}
+
+.white-bg {
+  background-color: var(--white);
+}
+.red-bg {
+  background-color: var(--red);
+}
+
+.green-bg {
+  background-color: var(--green);
+}
+
+.blue-bg {
+  background-color: var(--blue);
+}
+
+/* Centering */
+
+.centered-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.centered-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+header,
+main,
+footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+header,
+main,
+footer {
+  height: 50%;
+  width: 50%;
+}
+
+/* Responsive Settings */
+
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    overflow-y: scroll;
+    flex-grow: 1;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header,
+  main,
+  footer {
+    height: 100%;
+    width: 100%;
+  }
+}
