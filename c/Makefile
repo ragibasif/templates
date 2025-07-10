@@ -7,20 +7,20 @@
 # Copyright (c) 2025 Ragib Asif
 # Version 1.0.0
 
-RESET=\033[0m
-BOLD=\033[1m
-GREEN=\033[0;92m
-RED=\033[0;91m
-MAGENTA=\033[0;95m
-CYAN=\033[0;96m
+RESET:=\033[0m
+BOLD:=\033[1m
+GREEN:=\033[0;92m
+RED:=\033[0;91m
+MAGENTA:=\033[0;95m
+CYAN:=\033[0;96m
 
-ERROR=$(BOLD)$(RED)
-SUCCESS=$(BOLD)$(GREEN)
-INFO=$(BOLD)$(CYAN)
+ERROR:=$(BOLD)$(RED)
+SUCCESS:=$(BOLD)$(GREEN)
+INFO:=$(BOLD)$(CYAN)
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -Wvla -O1 -g3 -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
-DBG = gdb
+CFLAGS := -std=c2x -Wall -Wextra -Wvla -O1 -g3 -pedantic -v -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
+DBG := gdb
 LDFLAGS := -v -lc -lpthread -lm
 
 BUILD_DIRECTORY := build
@@ -32,7 +32,7 @@ SRCS := $(wildcard *.c) $(wildcard */*.c)
 HDRS := $(wildcard *.h) $(wildcard */*.h)
 OBJS := $(patsubst %.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
 
-.PHONY: all clean help run test check debug
+.PHONY: all clean help run check debug
 
 all: $(EXEC_PATH)
 
@@ -55,7 +55,6 @@ $(BUILD_DIRECTORY)/%.o: %.c
 		echo "$(SUCCESS)SUCCESS:$(RESET) Compiled $<" || \
 		(echo "$(ERROR)ERROR$(RESET) Failed to compile $<" && exit 1)
 
-
 debug: $(EXEC_PATH)
 	@echo "$(INFO)make debug$(RESET)"
 	@echo "$(DBG) ./$(EXEC_PATH)"
@@ -66,14 +65,12 @@ clean:
 	@echo "$(RM) -r $(EXEC_PATH) $(OBJS) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .*.un~"
 	@$(RM) -r $(EXEC_PATH) $(OBJS) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .*.un~
 
-
 run: $(EXEC_PATH)
 	@echo "$(INFO)make run$(RESET)"
 	@make clean
 	@make all
 	@./$(EXEC_PATH)
 	@make clean
-
 
 help:
 	@echo "$(INFO)make help$(RESET)"
